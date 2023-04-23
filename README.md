@@ -28,9 +28,7 @@ b. Install [SAAS UI](https://saas-ui.dev/docs)
 npm i @saas-ui/react @chakra-ui/react @emotion/react@^11 @emotion/styled@^11 framer-motion@^6
 ```
 ### Provider SetUp
-
-set up the povider
-wrap the Component with the SaasProvider:
+In your `_app.js`  insert the following code:
 ```
 import '@/styles/globals.css'
 import { SaasProvider } from '@saas-ui/react'
@@ -43,6 +41,40 @@ export default function App({ Component, pageProps }) {
   )
 }
 ```
-second step link component
-Configure a linkComponent to make the Saas UI Link work with the Next.js router.
-The legacyBehavior is only required for Next.js 13+.
+By default NextJS comes with some prefilled CSS files which is imported as a global stlyesheet from the `@/styles` directly applied to all components of the applications. Import `SaasProvider` component from `@saas-ui/react`package that provides a theme and other UI related configurations to the application. The SaasProvider component is used to wrap any part of the application that requires access to these configurations.
+We have the default App function that is rendered for every page in the application.The function takes two props:
+- `Component`: is the current page that is being rendered 
+- `pageProps`: are the initial props that were passed to the page during server-side rendering.
+The App function returns the SaasProvider component, with the Component and pageProps passed as props to the Component. This ensures that the SaasProvider and its related configurations are available to all pages in the application.
+
+### Link Component
+We will configure a `linkCompnent` to make Saas UI link work with the NextJS router. This is mainly required for NextJS 13+.
+We wil add the `link component` in the `_app.js` file. 
+
+```
+import NextLink from 'next/link'
+import { SaasProvider, LinkProps  } from '@saas-ui/react'
+
+const Link = (props) => {
+  return <NextLink {...props} legacyBehavior />
+}
+export default function App({ Component, pageProps }) {
+  return (
+    <SaasProvider linkComponent={Link}>
+        <Component {...pageProps} />
+    </SaasProvider>
+  )
+}
+```
+In the above code `NextLink` is a component from the NextJS library that handles client-side navigation. It is imported and used as a base component for the custom Link component. In this code, it is imported and used as a base component for the custom Link component. The Link component defined is a custom wrapper around the NextLink component. It passess all its props to NextLink along with an additional prop called `legacyBehavior`. This is a custom prop used by the application to modify the behavior of links.The Link component is also passed to the SaasProvider as a prop, so that all links in the application use the custom Link component.
+
+### Creating a User Settings Form
+The form component is built on top of the React Hook Form following the WAI(Web Accessibility Initiativ) specifications to make sure forms built with it are inclusive and accessible to all users.
+
+A little background, the React Hook form helps developers build forms in React with less code and performance optimization. This provides a seamless API use to manage states and validations. WAI is an international group that works to improve accessibility of the web by setting guidelines for creating accessible content.
+
+
+
+
+
+
