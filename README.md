@@ -69,12 +69,29 @@ export default function App({ Component, pageProps }) {
 In the above code `NextLink` is a component from the NextJS library that handles client-side navigation. It is imported and used as a base component for the custom Link component. In this code, it is imported and used as a base component for the custom Link component. The Link component defined is a custom wrapper around the NextLink component. It passess all its props to NextLink along with an additional prop called `legacyBehavior`. This is a custom prop used by the application to modify the behavior of links.The Link component is also passed to the SaasProvider as a prop, so that all links in the application use the custom Link component.
 
 ### Creating a User Settings Form
+
 The form component is built on top of the React Hook Form following the WAI(Web Accessibility Initiativ) specifications to make sure forms built with it are inclusive and accessible to all users.
 
 A little background, the React Hook form helps developers build forms in React with less code and performance optimization. This provides a seamless API use to manage states and validations. WAI is an international group that works to improve accessibility of the web by setting guidelines for creating accessible content.
+The `Form` component provides particular props to customize the behavior of the form. 
 
-
-
-
-
+The props include:
+- `onSubmit` prop that specifies the function called when the `Form` is submitted.
+- `required` prop specifies a field that cannot be empty
+- `children` prop specifies content of the form and can be a render prop or a ReactNode
+- `context` prop passes context to the form
+- `criteriaMode` prop for validation criteria applied
+- `defaultValues` specifies default values
+- `delayError` delays showing errors until the user stops typing
+- `formRef` is the reference to the HTMLFormElement
+- `mode` specifies the validation mode
+- `onChange` triggered when fields change
+- `onError` triggered when there are errors for validation
+- `ref` is  a reference to the `useFormReturn` hook
+- `resolver` is the resolver function for the form schema.
+- `reValidateMode` specifies when to re-validate the form.
+- `schema` specifies the form schema and only supports the Yup schema at the moment
+- `shouldFocusError` specifies if the form should focus on the first error
+-  `shouldUnregister` specifies  if the fields should be unregistered when they are removed
+- `shouldUseNativeValidation` specifies if to use the native browser validation
 
