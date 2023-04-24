@@ -16,7 +16,7 @@ const usePasswordMatch = () => {
     setIsMatch(e.target.value === password);
   };
 
-  return {isMatch, handlePasswordChange, handleConfirmPasswordChange };
+  return {password, confirmPassword, isMatch, handlePasswordChange, handleConfirmPasswordChange };
 };
 
 export default usePasswordMatch;

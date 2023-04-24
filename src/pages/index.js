@@ -16,6 +16,8 @@ const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
   const {
+    password,
+    confirmPassword,
     isMatch,
     handlePasswordChange,
     handleConfirmPasswordChange,
@@ -56,8 +58,8 @@ export default function Home() {
                     rules={{ required: true }}
                     width="20.5em" 
                   />
-                <Field type="password" name="password" label=" New Password" width="18em" rules={{ required: true, type: 'password' }} onChange={handlePasswordChange} />
-                <Field type="password" name="confirmPassword" label="Confirm Password" width="18em" rules={{ required: true, type: 'password' }} onChange={handleConfirmPasswordChange}/>
+                <Field type="password" name="password" label=" New Password" width="18em" rules={{ required: true}} onChange={handlePasswordChange} />
+                <Field type="password" name="confirmPassword" label="Confirm Password" width="18em" rules={{ required: true}} onChange={handleConfirmPasswordChange}/>
                 {!isMatch && <p className={styles.highlight}>Passwords do not match</p>}
                   <SubmitButton disableIfInvalid > Save </SubmitButton> 
               </FormLayout>
