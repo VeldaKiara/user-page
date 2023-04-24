@@ -23,7 +23,7 @@ export default function Home() {
 
   const handleSubmit = (event) => {
 
-    // console.log(event)
+    console.log(event)
   
     // Handle form submission here
   };
