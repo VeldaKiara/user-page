@@ -15,13 +15,8 @@ import usePasswordMatch from "./pwd";
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
-  const {
-    password,
-    confirmPassword,
-    isMatch,
-    handlePasswordChange,
-    handleConfirmPasswordChange,
-  } = usePasswordMatch();
+  
+  const { isMatch, handlePasswordChange, handleConfirmPasswordChange } = usePasswordMatch();
 
   const handleSubmit = (event) => {
 
