@@ -15,8 +15,8 @@ import usePasswordMatch from "./pwd";
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
-  
-  const { isMatch, handlePasswordChange, handleConfirmPasswordChange } = usePasswordMatch();
+
+  const { password, confirmPassword, isMatch, handlePasswordChange, handleConfirmPasswordChange } = usePasswordMatch();
 
   const handleSubmit = (event) => {
 
@@ -53,8 +53,8 @@ export default function Home() {
                     rules={{ required: true }}
                     width="20.5em" 
                   />
-                <Field type="password" name="password" label=" New Password" width="18em" rules={{ required: true}} onChange={handlePasswordChange} />
-                <Field type="password" name="confirmPassword" label="Confirm Password" width="18em" rules={{ required: true}} onChange={handleConfirmPasswordChange}/>
+                <Field type="password" name="password" label=" New Password"  value ={password} width="18em" rules={{ required: true}} onChange={handlePasswordChange} />
+                <Field type="password" name="confirmPassword" label="Confirm Password" value={confirmPassword} width="18em" rules={{ required: true}} onChange={handleConfirmPasswordChange}/>
                 {!isMatch && <p className={styles.highlight}>Passwords do not match</p>}
                   <SubmitButton disableIfInvalid > Save </SubmitButton> 
               </FormLayout>
