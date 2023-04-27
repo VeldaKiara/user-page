@@ -1,35 +1,35 @@
 # How To Build A User Settings Page In Five Minutes
-Humans inherently desire to make our mark and leave a lasting impression. Whether through scribbling on the walls of a classroom or sharing our experiences on a blog, we want to assert our presence and be remembered.
+Humans inherently desire to tune our environment to our needs. This desire also applies to our digital footprint – a fact that’s especially important to keep in mind when building SaaS applications. 
 
-The same desire applies to software applications, where users want to control their space and data and be part of something bigger. That's why a user settings page is a crucial aspect of any software application that values its users' needs.
+Your users will need to craft their identity, and control their space, data, and overall experience, and that is why a good User/Account Settings page is a critical aspect of any SaaS that values its users' needs. 
 
-Going through this article, you can build a user settings page in your SAAS app in just five minutes. The settings page enables your users to take up their space in your application, shape their experience, and leave their digital footprint.
+In this article, we’ll cover building a User Settings page in your SAAS app in just five minutes, using Next.js as our framework of choice, and [Saas UI](https://saas-ui.dev/docs) – an open-source, reusable collection of accessible and customizable React components geared towards SaaS apps – as our component library. 
 
-In this article, we will be using SaaS UI and NextJS.
+[](/article-assets/screen-1.png)
 
-[SAAS UI](https://saas-ui.dev/docs) is a reusable collection of React components designed to make it easier and faster to build a user interface for SAAS applications.. [NextJS](https://nextjs.org/docs/guides)is an open-source framework built on React. It allows developers to create server-side React applications easily while providing features like automatic code splitting, static site generation, etc. 
+Let’s get right to it!
 
-NextJS is mainly used for Saas applications because:
-- Server-side rendering improves SEO and user experiences
-- Automating code splitting allows users only to download the code they need, which improves performance
-- Static site generation allows code to be served from a CDN for even faster performance
-- Built-in API routes make it easy to build APIs without setting up a separate server
-- Good developer experience provides features out of the box, such as hot module replacement, automatic code reloading, and improve productivity
+## Prerequisites
+### 1. Installing Dependencies
 
-### Project Setup
-We are using [NextJS](https://nextjs.org/docs/guides) and [SAAS UI](https://saas-ui.dev/docs)
+#### a. Install NextJS 
 
-a. Install [NextJS](https://nextjs.org/docs/guides) which comes with dependencies like: react, react-dom, next, eslint and eslint-config-next.
-```
-npx create-next-app@latest my-site
-```
-b. Install [SAAS UI](https://saas-ui.dev/docs)
-```
-npm i @saas-ui/react @chakra-ui/react @emotion/react@^11 @emotion/styled@^11 framer-motion@^6
-```
-### Provider SetUp
-In your `_app.js` , insert the following code:
-```
+`npx create-next-app@latest my-site`
+
+#### b. Install Saas UI with its dependencies.
+
+`npm i @saas-ui/react @chakra-ui/react @emotion/react@^11 @emotion/styled@^11 framer-motion@^6`
+
+#### c. For the Sidebar, you’ll also have to install the Sidebar module, currently in beta.
+
+`npm i @saas-ui/sidebar`
+
+### 2. Adding the Saas UI Provider
+For SaaS UI to work properly, you need to wrap your NextJS app with the SaasProvider, which performs the base ChakraUI setup for you, adding global styles, the Saas UI base  theme, and more.
+
+In your _app.js , insert the following code:
+
+```javascript
 import '@/styles/globals.css'
 import { SaasProvider } from '@saas-ui/react'
 
@@ -41,151 +41,148 @@ export default function App({ Component, pageProps }) {
   )
 }
 ```
-By default, NextJS comes with some prefilled CSS files, which are imported as a global stylesheet from the `@/styles` and directly applied to all components of the applications. Import the `SaasProvider` component from the `@saas-ui/react` package that provides a theme and other UI-related configurations to the application. The SaasProvider component wraps any part of the application that requires access to these configurations.
-We have the default App function rendered for every page in the application. The function takes two props:
-- `Component`: is the current page that is being rendered 
-- `pageProps`: are the initial props passed to the page during server-side rendering.
-The App function returns the SaasProvider component, with the Component and pageProps passed as props to the Component. Props will ensure that the SaasProvider and its related configurations are available on all pages in the application.
 
-### Link Component
-We will configure a `linkCompnent` to make Saas UI link work with the NextJS router. This is mainly required for NextJS 13+.
-We wil add the `link component` in the `_app.js` file. 
+## Creating the Settings Page
+### 1. User Settings Form
+The form component uses React Hook Form, following the WAI(Web Accessibility Initiative) specifications to ensure accessibility.
 
-```
-import NextLink from 'next/link'
-import { SaasProvider, LinkProps  } from '@saas-ui/react'
-
-const Link = (props) => {
-  return <NextLink {...props} legacyBehavior />
-}
-export default function App({ Component, pageProps }) {
-  return (
-    <SaasProvider linkComponent={Link}>
-        <Component {...pageProps} />
-    </SaasProvider>
-  )
-}
-```
-In the above code, `NextLink` is a component from the NextJS library that handles client-side navigation. It is imported and used as a base component for the custom Link component. This code is imported and used as a base component for the custom Link component. The Link component defined is a custom wrapper around the NextLink component. It passes all its props to NextLink and an additional prop called `legacyBehavior`. This is a custom prop used by the application to modify the behavior of links. The Link component is also passed to the SaasProvider as a prop, so all links in the application use the custom Link component.
-
-### Creating a User Settings Form
-
-The form component is built on top of the React Hook Form following the WAI(Web Accessibility Initiative) specifications to make sure forms created with it are inclusive and accessible to all users.
-
-A little background, the React Hook form helps developers build forms in React with less code and performance optimization. This provides a seamless API use to manage states and validations. WAI is an international group that works to improve the accessibility of the web by setting guidelines for creating accessible content.
-The `Form` component provides particular props to customize the behavior of the form. 
-
-The props include:
-- `onSubmit` prop that specifies the function called when the `Form` is submitted.
-- `required` prop specifies a field that cannot be empty
-- `children` prop specifies content of the form and can be a render prop or a ReactNode
-- `context` prop passes context to the form
-- `criteriaMode` prop for validation criteria applied
-- `defaultValues` specifies default values
-- `delayError` delays showing errors until the user stops typing
-- `formRef` is the reference to the HTMLFormElement
-- `mode` specifies the validation mode
-- `onChange` triggered when fields change
-- `onError` triggered when there are errors for validation
-- `ref` is  a reference to the `useFormReturn` hook
-- `resolver` is the resolver function for the form schema.
-- `reValidateMode` specifies when to re-validate the form.
-- `schema` specifies the form schema and only supports the Yup schema at the moment
-- `shouldFocusError` specifies if the form should focus on the first error
--  `shouldUnregister` specifies  if the fields should be unregistered when they are removed
-- `shouldUseNativeValidation` specifies if to use the native browser validation
-
-In your `index,js` file add the following code to set up the form and functionalities.
-```
-import Head from 'next/head'
-import { Inter } from 'next/font/google'
-import styles from '@/styles/Home.module.css'
-import {
-  Form,
-  FormLayout,
-  Field,
-  SubmitButton,
-  Card,
-  CardBody
-} from '@saas-ui/react'
-import usePasswordMatch from "./pwd";
+> 💡 React Hook form helps developers build forms in React with less code and performance optimization. This provides a seamless API use to manage states and validations. 
 
 
-const inter = Inter({ subsets: ['latin'] })
+The Form component provides particular props to customize the behavior of the form.
+If you need to know which props this component takes, see here. 
 
-export default function Home() {
+#### ./components/UserSettings.jsx
+
+```javascript
+import { Box, Flex } from "@chakra-ui/react";
+
+import { Persona, Form, FormLayout, Field, SubmitButton } from "@saas-ui/react";
+
+import usePasswordMatch from "@/hooks/pwd";
+
+export const UserSettings = () => {
   const {
+    password,
+    confirmPassword,
     isMatch,
     handlePasswordChange,
     handleConfirmPasswordChange,
   } = usePasswordMatch();
 
   const handleSubmit = (event) => {
-
-    // console.log(event)
-  
+    console.log(event);
     // Handle form submission here
   };
   return (
     <>
-      <Head>
-        <title>User Page</title>
-        <meta name="description" content="Generated by create next app" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <main>
-        <div className={styles.flex_center}> 
-        <Card maxW="400px" margin="25px auto">
-        <CardBody>
-        <Form onSubmit={handleSubmit} 
-        defaultValues={{
-          firstName: 'Velda',
-          lastName: 'Kiara',
-          email:'velda@gmail.com'
-        }} 
+      <Box padding="8">
+        <Flex alignItems="start" marginBlock="4">
+          <Persona
+            name="Velda Kiara"
+            secondaryLabel="Pro Plan"
+            size="lg"
+            letterSpacing={"0.78px"}
+          />
+        </Flex>
+
+        <Form
+          onSubmit={handleSubmit}
+          defaultValues={{
+            firstName: "Velda",
+            lastName: "Kiara",
+            email: "velda@gmail.com",
+          }}
         >
-              <FormLayout>
-                <Field name="firstName" label="First Name" width="20.5em" rules={{ required: true}} />
-                <Field name="lastName" label="Last Name" width="20.5em" rules={{ required: true }} />
-                  <Field
-                    name="email"
-                    label="Email"
-                    type="email" 
-                    rules={{ required: true }}
-                    width="20.5em" 
-                  />
-                <Field type="password" name="password" label=" New Password" width="18em" rules={{ required: true, type: 'password' }} onChange={handlePasswordChange} />
-                <Field type="password" name="confirmPassword" label="Confirm Password" width="18em" rules={{ required: true, type: 'password' }} onChange={handleConfirmPasswordChange}/>
-                {!isMatch && <p className={styles.highlight}>Passwords do not match</p>}
-                  <SubmitButton disableIfInvalid > Save </SubmitButton> 
-              </FormLayout>
+          <FormLayout>
+            <Field
+              backgroundColor={"white"}
+              textColor={"black"}
+              name="firstName"
+              label="First Name"
+              width="20.5em"
+              rules={{ required: true }}
+            />
+            <Field
+              backgroundColor={"white"}
+              textColor={"black"}
+              name="lastName"
+              label="Last Name"
+              width="20.5em"
+              rules={{ required: true }}
+            />
+            <Field
+              backgroundColor={"white"}
+              textColor={"black"}
+              name="email"
+              label="Email"
+              type="email"
+              rules={{ required: true }}
+              width="20.5em"
+            />
+            <Field
+              fontFamily={"mono"}
+              backgroundColor={"white"}
+              textColor={"black"}
+              type="password"
+              name="password"
+              label=" New Password"
+              value={password}
+              width="18em"
+              rules={{ required: true }}
+              onChange={handlePasswordChange}
+            />
+            <Field
+              fontFamily={"mono"}
+              backgroundColor={"white"}
+              textColor={"black"}
+              type="password"
+              name="confirmPassword"
+              label="Confirm Password"
+              value={confirmPassword}
+              width="18em"
+              rules={{ required: true }}
+              onChange={handleConfirmPasswordChange}
+            />
+            {!isMatch && (
+              <p className="highlight">Passwords do not match</p>
+            )}
+            <SubmitButton marginBlockStart="10px" disableIfInvalid>
+              Save
+            </SubmitButton>
+          </FormLayout>
         </Form>
-        </CardBody>
-        </Card>
-        </div>   
-      </main>
+      </Box>
     </>
-  )
-}
-
+  );
+};
 ```
-The head component from the `next/head` library defines the document's head section. It sets the title, description, viewport meta tag, and favicon. The `Inter` component from the `next/font/google` library leads the `inter` font from Google Fonts. It specifies the "Latin" subset of the font to be loaded. The styles component is imported from the CSS module "@/styles/Home.module.css."
+Here’s what we’re using from the @saas-ui/react library for our User Settings form.
 
-The form-related components used for this project imported from `@saas-ui/react` library include `Form, FormLayout, Field, SubmitButton, Card and CardBody`. The components define the behavior and layout of the form.
+* Persona, for a simple user avatar component with optional labels (say, listing the current plan this particular user is being billed for)
 
-`usePasswordMatch` function is imported locally from a module called `pwd`. The function returns an object with the three properties: 
-- `isMatch`, 
-- `handlePasswordChange`, and 
-- `handleConfirmPasswordChange`
+* Form, with its associated components – FormLayout, Field, and SubmitButton. These are the building blocks of our form, and should be self explanatory.
 
-The above properties validate whether the passwords entered match. You can leave this pending at the moment. We will get to it in a few.
-The `Home` function is the main Component of the module. It renders the form and handles its submission. The `defaultValues` prop of the `Form` component sets the default values because this page assumes the user has already signed in to the Saas Application. The `field` components define the individual input fields of the form. Each has a `name, label, type, and rules` prop. They also have `width` to ensure they are at an appropriate size. The `type` prop specifies the `input type`, which can be `text, email, or password`. The `rules` prop specifies the validation rules for the fields. The `onChange` prop specifies a callback function whenever the user changes the values of the input field. The `SubmitButton` defines the behavior of the form. The `disableIfInvalid` prop disables the button if input fields are invalid. The `isMatch` property is used to render a message to the user if the new password and confirm password entered do not match. The `handleSubmit` function is called when the user submits the form. It currently logs the event object to the console. However, the function can be modified to save the data in the database of the Saas application.
+For our basic layouts, we’re also taking Box and Flex from the base ChakraUI library itself (@chakraui/react) to save time. This is entirely optional, and you could build your own layouts from scratch if you want.
 
-### Password Validation
+> 💡 The defaultValues prop of the Form component sets the default values because our tutorial app assumes the user has already signed in to the SaaS Application. 
 
-Create a `pwd.js` file and add the following code:
-```
+
+The usePasswordMatch hook is imported locally from a module called pwd. This is a custom password validation hook we’re using, that returns an object with the three properties:
+  * isMatch
+  * handlePasswordChange,  and
+  * handleConfirmPasswordChange
+
+Which are used for the two password fields in our form, and also for conditionally rendering an error message (“Passwords do not match”)  if they do not match. 
+
+Let’s implement this module right now.
+
+## 2. Custom Hook for Password Management
+It’s time to create our password logic. We’ll create a usePasswordMatch hook for this.
+
+#### ./hooks/password-validation.js
+
+```javascript
 import { useState } from "react";
 
 const usePasswordMatch = () => {
@@ -204,47 +201,180 @@ const usePasswordMatch = () => {
     setIsMatch(e.target.value === password);
   };
 
-  return { password, confirmPassword, isMatch, handlePasswordChange, handleConfirmPasswordChange };
+  return {password, confirmPassword, isMatch, handlePasswordChange, handleConfirmPasswordChange };
 };
 
 export default usePasswordMatch;
 ```
-The code above creates a custom React hook named `usePasswordMatch`  that handles password and confirm password inputs to check whether they match. The `useState` hook is used to set and manage the state of the ` password, confirmPassword and isMatch`. Once the starts to type in the password input field, `handlePasswordChange` is called to update the password state by checking if it matches the value of the password. If it does match, it returns True else, False. Same case with the confirm password input field with the `handleConfirmPasswordChange` function. The hook returns an object that contains `password, confirmPassword, isMatch, handlePasswordChange, and handleConfirmPasswordChange`. 
 
-The last bit is styling. Since It's a card, we want it to be centralized to have a presentable layout.
-In the files for `global.css` add the following code:
+You could make your password management logic as simple or complex as you wanted, but for now, we’re just including one simple validation – check if the value in the password field matches the one in the ‘confirm password’ field, and return a boolean value for isMatch, accordingly.
+
+Let’s quickly explain this code. 
+
+* The useState hook is used to set and manage the state of the password, confirmPassword and isMatch. 
+* Once the user starts to type in the password input field, handlePasswordChange is called to update the password state by checking if it matches the value of the password. 
+* Same with the confirm password input field with the handleConfirmPasswordChange function. 
+* The hook itself returns an object that contains password, confirmPassword, isMatch, handlePasswordChange, and handleConfirmPasswordChange.
+
+# 3. The Sidebar
+
+Our Sidebar component for the Account Settings page is pretty simple. Saas UI offers a Sidebar component out of the box (this is currently in beta!), and we’ll just use that as a minimal example.
+
+```javascript
+/* SaaS UI - SideBar Imports */
+import { Sidebar, SidebarSection, NavItem } from "@saas-ui/sidebar";
+
+/* SaaS UI & Chakra UI Imports */
+import { Spacer } from "@chakra-ui/react";
+
+export const MySidebar = () => {
+  return (
+    <>
+      <Sidebar breakpoints={{ base: false }} backgroundColor="gray.100">
+        <SidebarSection direction="row">
+          MySaaSTM
+          <Spacer />
+        </SidebarSection>
+        <SidebarSection aria-label="Main " textColor="white">
+          <NavItem>Home</NavItem>
+          <NavItem>Log</NavItem>
+          <NavItem>Analytics</NavItem>
+          <NavItem isActive>Settings</NavItem>
+        </SidebarSection>
+      </Sidebar>
+    </>
+  );
+};
 ```
-html, body 
-{
-  height: 100%;
+Let’s quickly explain this code:
+
+  * The Sidebar component is responsive, and minimizes into a hamburger menu on smaller screens. For our particular design, we don’t want this behavior, so we disable it with breakpoints={{ base: false }}  This is entirely optional though, and depends on what design you  have in mind for your own SaaS.
+  * Each navigable item in this Sidebar is a NavItem, and we mark the Settings page as active with isActive (defaulting to true). In a  real world app, you’d manage this value, passing state.
+
+Not much  else to say here, let’s move on to our main page at index.js, which has a tabbed display!
+
+### 4. Index.js
+
+Our main page is, once again, simple enough, with one caveat – for our main content section we’re using a tabbed display, with our UserSettings component  being one of them.
+
+#### ./pages/index.js
+```javascript
+import Head from "next/head";
+
+/* SaaS UI & Chakra UI Imports */
+import { AppShell } from "@saas-ui/react";
+import { Box, Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
+
+/* My Components */
+import { UserSettings } from "../components/UserSettings.jsx";
+import { MySidebar } from "../components/MySidebar.jsx";
+
+export default function Home() {
+  return (
+    <>
+      <Head>
+        <title>MySaaS &gt; Account Settings</title>
+        <meta name="description" content="Generated by create next app" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+
+      <div className="container">
+        <AppShell sidebar={<MySidebar />}>
+          <Box h="100%" w="100%" padding="1em">
+            <Tabs isFitted size="md" variant="enclosed">
+              <TabList>
+                <Tab _selected={{ color: "white", bg: "primary.500" }}>
+                  User
+                </Tab>
+                <Tab _selected={{ color: "white", bg: "primary.500" }}>
+                  Integrations
+                </Tab>
+                <Tab _selected={{ color: "white", bg: "primary.500" }}>
+                  Security
+                </Tab>
+                <Tab _selected={{ color: "white", bg: "primary.500" }}>
+                  Billing
+                </Tab>
+              </TabList>
+              <TabPanels>
+                <TabPanel>
+                  <UserSettings />
+                </TabPanel>
+                <TabPanel>
+                  <p>Integrations Here!</p>
+                </TabPanel>
+                <TabPanel>
+                  <p>Security Here!</p>
+                </TabPanel>
+                <TabPanel>
+                  <p>Billing Here!</p>
+                </TabPanel>
+              </TabPanels>
+            </Tabs>
+          </Box>
+        </AppShell>
+      </div>
+    </>
+  );
+}
+```
+We’re in the home stretch now! 
+
+So, for our index.js, we’re enclosing our app in AppShell, which is the starting point to building composable UIs with Saas UI. The shell for your app is a collection of components shared throughout your app – this is where you’d include your header, navbar, sidebar, footers, etc. No surprises then, that we’re passing our Sidebar component as the sidebar for it. 
+
+For the main content, we’re going with a tabbed page that lets our SaaS’ users manage various settings like Billing, third party integrations, security options, and most importantly – the component we’ve built to manage their Profile/User settings. For this, we can just use the Tabs component from the base ChakraUI library itself, specifically, the Fitted Tabs variant which fills the space of the container it’s in, adjusting each tab’s dimensions automatically.
+
+Finally, as you might’ve guessed already, each of these components you design will be enclosed by a TabPanel, like so:
+
+```javascript
+<TabPanel>
+  <UserSettings />
+</TabPanel>
+
+```
+### 5. Styling
+We’ve handled most of our styling using Saas UI and ChakraUI’s native styling solutions anyway, so the last bit left is miscellaneous styling, handled in globals.css. 
+
+
+We’ve handled most of our styling using Saas UI and ChakraUI’s native styling solutions anyway, so the last bit left is miscellaneous styling, handled in globals.css. 
+
+#### ./styles/globals.css
+
+```css
+html,
+body {
   padding: 0;
   margin: 0;
 }
-```
-The HTML and body elements height is 100% of the viewport height, Which means the entire browser window height. It removes any default padding or margin applied by the browser. 
 
-In the `home.module.css` add the following code:
-```
-flex_center{
-  display: flex;
-  align-content: center;
-  justify-content: center;
-  flex-direction: column;
+.container {
   height: 100vh;
+  width: 100vw;
 }
-.highlight{
+
+.highlight {
   color: red;
-  font-style: oblique;
+  font-size: 0.9em;
 }
 ```
-The `flex-center`{the `div` that holds the card} class sets the flex container with items stacked vertically, centered horizontally, and vertically within its container. The `highlight` {the text displayed when passwords do not match} sets the color to red, implying an error message.
 
-The code is now complete, it should like this ![output page](./public/output1.png)
+Explanations: 
+  * Removes any default padding or margin applied by the browser, 
+  * The `container` class just makes the div we’ve been using to wrap our entire app take up the whole screen in both axes. 
+  * The `highlight` class (used for the error message displayed when passwords do not match) simply sets that text’s color to red.
+
+
+All done! Fire up your browser, and you should see this.
+
+[](/article-assets/screen-2.png)
 
 The Github Code can be found [here](https://github.com/VeldaKiara/user-page)
 
-Through this code you should have built a fully functioning user setings page using Saas UI and NextJS.
+## Conclusion
 
-May your keyboard be swift, your bugs be few, and your fun meter be off the charts as you code away!
+To sum it up, the user/account settings page is an essential aspect of any SaaS app. Hopefully this article has shown you just how easy Saas UI makes building a beautiful, accessible, and intuitive user settings page in minutes. 
 
+To this end, we took a step-by-step approach that covered installing dependencies, adding the Saas UI provider, adding a functional Sidebar, and creating a user settings form using Saas UI's built-in React Hook Form implementation (with out-of-the-box WAI-ARIA compliance). Following this approach, you can easily create your own user settings page for your SaaS app that aligns with your users' needs and preferences. 
 
+So, may your keyboard be swift, your bugs be few, and your fun meter be off the charts as you code away
