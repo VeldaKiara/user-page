@@ -1,5 +1,4 @@
 import Head from "next/head";
-import styles from "@/styles/Home.module.css";
 
 /* SaaS UI & Chakra UI Imports */
 import { AppShell } from "@saas-ui/react";
@@ -19,7 +18,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div className={styles.container}>
+      <div className="container">
         <AppShell sidebar={<MySidebar />}>
           <Box h="100%" w="100%" padding="1em">
             <Tabs isFitted size="md" variant="enclosed">

@@ -1,5 +1,3 @@
-import React from "react";
-
 /* SaaS UI - SideBar Imports */
 import { Sidebar, SidebarSection, NavItem } from "@saas-ui/sidebar";
 

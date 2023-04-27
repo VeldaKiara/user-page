@@ -1,8 +1,9 @@
+
 import { Box, Flex } from "@chakra-ui/react";
 
 import { Persona, Form, FormLayout, Field, SubmitButton } from "@saas-ui/react";
 
-import usePasswordMatch from "@/pages/pwd";
+import usePasswordMatch from "@/hooks/pwd";
 
 export const UserSettings = () => {
   const {
@@ -15,12 +16,11 @@ export const UserSettings = () => {
 
   const handleSubmit = (event) => {
     console.log(event);
-
     // Handle form submission here
   };
   return (
     <>
-      <Box padding='8'>
+      <Box padding="8">
         <Flex alignItems="start" marginBlock="4">
           <Persona
             name="Velda Kiara"
@@ -89,7 +89,7 @@ export const UserSettings = () => {
               onChange={handleConfirmPasswordChange}
             />
             {!isMatch && (
-              <p className={styles.highlight}>Passwords do not match</p>
+              <p className="highlight">Passwords do not match</p>
             )}
             <SubmitButton marginBlockStart="10px" disableIfInvalid>
               Save
