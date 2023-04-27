@@ -59,7 +59,7 @@ import { Box, Flex } from "@chakra-ui/react";
 
 import { Persona, Form, FormLayout, Field, SubmitButton } from "@saas-ui/react";
 
-import usePasswordMatch from "@/hooks/pwd";
+import usePasswordMatch from "@/hooks/password-validation";
 
 export const UserSettings = () => {
   const {
