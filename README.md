@@ -50,7 +50,7 @@ The form component uses React Hook Form, following the WAI(Web Accessibility Ini
 
 
 The Form component provides particular props to customize the behavior of the form.
-If you need to know which props this component takes, see here. 
+If you need to know which props this component takes, [see here](https://saas-ui.dev/docs/components/forms/form#props). 
 
 #### ./components/UserSettings.jsx
 
