@@ -5,7 +5,7 @@ Your users will need to craft their identity, and control their space, data, and
 
 In this article, we’ll cover building a User Settings page in your SAAS app in just five minutes, using Next.js as our framework of choice, and [Saas UI](https://saas-ui.dev/docs) – an open-source, reusable collection of accessible and customizable React components geared towards SaaS apps – as our component library. 
 
-[](/article-assets/screen-1.png)
+[](https://github.com/VeldaKiara/user-page/blob/main/article-assets/screen-1.png)
 
 Let’s get right to it!
 
@@ -367,7 +367,7 @@ Explanations:
 
 All done! Fire up your browser, and you should see this.
 
-[](/article-assets/screen-2.png)
+[](https://github.com/VeldaKiara/user-page/blob/main/article-assets/screen-2.png)
 
 The Github Code can be found [here](https://github.com/VeldaKiara/user-page)
 
