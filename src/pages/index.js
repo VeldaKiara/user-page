@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { Inter } from "next/font/google";
+
 import styles from "@/styles/Home.module.css";
 import {
   Form,
@@ -22,9 +22,16 @@ import {
   Presence,
 } from "@saas-ui/react";
 
-import usePasswordMatch from "./pwd";
+// import {
+//   Sidebar,
+//   SidebarSection,
+//   SidebarToggleButton,
+//   SidebarOverlay,
+//   NavGroup,
+//   NavItem,
+// } from '@saas-ui/sidebar'
 
-const inter = Inter({ subsets: ["latin"] });
+import usePasswordMatch from "./pwd";
 
 export default function Home() {
   const {
@@ -48,76 +55,94 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main>
+      <>
         <div className={styles.container}>
           <Center h="100%" w="100%">
-            <Card maxW="400px" margin="auto">
-              <CardBody>
-                <Flex h="70px" alignItems={"start"} marginBlock={"4"}>
-                  <Persona
-                    name="Nervous Testpilot"
-                    secondaryLabel="Contributor"
-                    size="lg"
-                  />
-                </Flex>
+            {/* <Card maxW="400px" margin="auto" backgroundColor={"#eeeeee"}>
+              <CardBody> */}
+            <Flex direction="column">
+              <Flex alignItems="start" marginBlock="4">
+                <Persona
+                  name="Velda Kiara"
+                  secondaryLabel="Pro Plan"
+                  size="lg"
+                  letterSpacing={"0.78px"}
+                />
+              </Flex>
 
-                <Form
-                  onSubmit={handleSubmit}
-                  defaultValues={{
-                    firstName: "Velda",
-                    lastName: "Kiara",
-                    email: "velda@gmail.com",
-                  }}
-                >
-                  <FormLayout>
-                    <Field
-                      name="firstName"
-                      label="First Name"
-                      width="20.5em"
-                      rules={{ required: true }}
-                    />
-                    <Field
-                      name="lastName"
-                      label="Last Name"
-                      width="20.5em"
-                      rules={{ required: true }}
-                    />
-                    <Field
-                      name="email"
-                      label="Email"
-                      type="email"
-                      rules={{ required: true }}
-                      width="20.5em"
-                    />
-                    <Field
-                      type="password"
-                      name="password"
-                      label=" New Password"
-                      value={password}
-                      width="18em"
-                      rules={{ required: true }}
-                      onChange={handlePasswordChange}
-                    />
-                    <Field
-                      type="password"
-                      name="confirmPassword"
-                      label="Confirm Password"
-                      value={confirmPassword}
-                      width="18em"
-                      rules={{ required: true }}
-                      onChange={handleConfirmPasswordChange}
-                    />
-                    {!isMatch && (
-                      <p className={styles.highlight}>Passwords do not match</p>
-                    )}
-                    <SubmitButton disableIfInvalid> Save </SubmitButton>
-                  </FormLayout>
-                </Form>
-              </CardBody>
-            </Card>
+              <Form
+                onSubmit={handleSubmit}
+                defaultValues={{
+                  firstName: "Velda",
+                  lastName: "Kiara",
+                  email: "velda@gmail.com",
+                }}
+              >
+                <FormLayout>
+                  <Field
+                    backgroundColor={"white"}
+                    textColor={"black"}
+                    name="firstName"
+                    label="First Name"
+                    width="20.5em"
+                    rules={{ required: true }}
+                  />
+                  <Field
+                    backgroundColor={"white"}
+                    textColor={"black"}
+                    name="lastName"
+                    label="Last Name"
+                    width="20.5em"
+                    rules={{ required: true }}
+                  />
+                  <Field
+                    backgroundColor={"white"}
+                    textColor={"black"}
+                    name="email"
+                    label="Email"
+                    type="email"
+                    rules={{ required: true }}
+                    width="20.5em"
+                  />
+                  <Field
+                    fontFamily={"mono"}
+                    backgroundColor={"white"}
+                    textColor={"black"}
+                    type="password"
+                    name="password"
+                    label=" New Password"
+                    value={password}
+                    width="18em"
+                    rules={{ required: true }}
+                    onChange={handlePasswordChange}
+                  />
+                  <Field
+                    fontFamily={"mono"}
+                    backgroundColor={"white"}
+                    textColor={"black"}
+                    type="password"
+                    name="confirmPassword"
+                    label="Confirm Password"
+                    value={confirmPassword}
+                    width="18em"
+                    rules={{ required: true }}
+                    onChange={handleConfirmPasswordChange}
+                  />
+                  {!isMatch && (
+                    <p className={styles.highlight}>Passwords do not match</p>
+                  )}
+                  <SubmitButton marginBlockStart="10px" disableIfInvalid>
+                    Save
+                  </SubmitButton>
+                </FormLayout>
+              </Form>
+            </Flex>
+
+            {/* </CardBody>
+            </Card> */}
           </Center>
         </div>
-      </main>
+      </>
     </>
   );
 }

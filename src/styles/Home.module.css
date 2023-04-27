@@ -13,9 +13,19 @@
 .container {
   height: 100vh;
   width: 100vw;
+  /* background: rgb(65, 65, 65);
+  background: linear-gradient(
+    180deg,
+    rgba(65, 65, 65, 1) 0%,
+    rgba(18, 18, 18, 1) 100%
+  ); */
 }
 
 .highlight {
   color: red;
-  font-style: oblique;
+  font-size: 0.9em;
+}
+
+.chakra-avatar * {
+  border: 2px solid red;
 }
