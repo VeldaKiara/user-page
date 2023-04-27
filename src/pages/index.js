@@ -1,27 +1,43 @@
-import Head from 'next/head'
-import { Inter } from 'next/font/google'
-import styles from '@/styles/Home.module.css'
+import Head from "next/head";
+import { Inter } from "next/font/google";
+import styles from "@/styles/Home.module.css";
 import {
   Form,
   FormLayout,
   Field,
   SubmitButton,
   Card,
-  CardBody
-} from '@saas-ui/react'
+  CardBody,
+} from "@saas-ui/react";
+
+import { Center, Flex, Spacer } from "@chakra-ui/react";
+import {
+  Persona,
+  PersonaContainer,
+  PersonaAvatar,
+  PersonaDetails,
+  PersonaLabel,
+  PersonaSecondaryLabel,
+  PersonaTertiaryLabel,
+  Presence,
+} from "@saas-ui/react";
+
 import usePasswordMatch from "./pwd";
 
-
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
-
-  const { password, confirmPassword, isMatch, handlePasswordChange, handleConfirmPasswordChange } = usePasswordMatch();
+  const {
+    password,
+    confirmPassword,
+    isMatch,
+    handlePasswordChange,
+    handleConfirmPasswordChange,
+  } = usePasswordMatch();
 
   const handleSubmit = (event) => {
+    console.log(event);
 
-    console.log(event)
-  
     // Handle form submission here
   };
   return (
@@ -33,36 +49,75 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <div className={styles.flex_center}> 
-        <Card maxW="400px" margin="25px auto">
-        <CardBody>
-        <Form onSubmit={handleSubmit} 
-        defaultValues={{
-          firstName: 'Velda',
-          lastName: 'Kiara',
-          email:'velda@gmail.com'
-        }} 
-        >
-              <FormLayout>
-                <Field name="firstName" label="First Name" width="20.5em" rules={{ required: true}} />
-                <Field name="lastName" label="Last Name" width="20.5em" rules={{ required: true }} />
-                  <Field
-                    name="email"
-                    label="Email"
-                    type="email" 
-                    rules={{ required: true }}
-                    width="20.5em" 
+        <div className={styles.container}>
+          <Center h="100%" w="100%">
+            <Card maxW="400px" margin="auto">
+              <CardBody>
+                <Flex h="70px" alignItems={"start"} marginBlock={"4"}>
+                  <Persona
+                    name="Nervous Testpilot"
+                    secondaryLabel="Contributor"
+                    size="lg"
                   />
-                <Field type="password" name="password" label=" New Password"  value ={password} width="18em" rules={{ required: true}} onChange={handlePasswordChange} />
-                <Field type="password" name="confirmPassword" label="Confirm Password" value={confirmPassword} width="18em" rules={{ required: true}} onChange={handleConfirmPasswordChange}/>
-                {!isMatch && <p className={styles.highlight}>Passwords do not match</p>}
-                  <SubmitButton disableIfInvalid > Save </SubmitButton> 
-              </FormLayout>
-        </Form>
-        </CardBody>
-        </Card>
-        </div>   
+                </Flex>
+
+                <Form
+                  onSubmit={handleSubmit}
+                  defaultValues={{
+                    firstName: "Velda",
+                    lastName: "Kiara",
+                    email: "velda@gmail.com",
+                  }}
+                >
+                  <FormLayout>
+                    <Field
+                      name="firstName"
+                      label="First Name"
+                      width="20.5em"
+                      rules={{ required: true }}
+                    />
+                    <Field
+                      name="lastName"
+                      label="Last Name"
+                      width="20.5em"
+                      rules={{ required: true }}
+                    />
+                    <Field
+                      name="email"
+                      label="Email"
+                      type="email"
+                      rules={{ required: true }}
+                      width="20.5em"
+                    />
+                    <Field
+                      type="password"
+                      name="password"
+                      label=" New Password"
+                      value={password}
+                      width="18em"
+                      rules={{ required: true }}
+                      onChange={handlePasswordChange}
+                    />
+                    <Field
+                      type="password"
+                      name="confirmPassword"
+                      label="Confirm Password"
+                      value={confirmPassword}
+                      width="18em"
+                      rules={{ required: true }}
+                      onChange={handleConfirmPasswordChange}
+                    />
+                    {!isMatch && (
+                      <p className={styles.highlight}>Passwords do not match</p>
+                    )}
+                    <SubmitButton disableIfInvalid> Save </SubmitButton>
+                  </FormLayout>
+                </Form>
+              </CardBody>
+            </Card>
+          </Center>
+        </div>
       </main>
     </>
-  )
+  );
 }

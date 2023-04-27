@@ -1,4 +1,4 @@
-.flex_center{
+/* .flex_center{
   display: flex;
   align-content: center;
   justify-content: center;
@@ -6,6 +6,16 @@
   height: 100vh;
 }
 .highlight{
+  color: red;
+  font-style: oblique;
+} */
+
+.container {
+  height: 100vh;
+  width: 100vw;
+}
+
+.highlight {
   color: red;
   font-style: oblique;
 }
