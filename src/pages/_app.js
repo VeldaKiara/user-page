@@ -3,20 +3,27 @@ import { Inter } from "next/font/google";
 import NextLink from "next/link";
 // 1. import `SaasProvider` component
 import { SaasProvider } from "@saas-ui/react";
+import { useState, useEffect } from "react";
+import { supabase } from "../utils/supabase";
+import { createBrowserSupabaseClient } from '@supabase/auth-helpers-nextjs'
+import { SessionContextProvider } from '@supabase/auth-helpers-react'
 
 const inter = Inter({ subsets: ["latin"] });
 
-// const Link = (props) => {
-//   return <NextLink {...props} legacyBehavior />;
-// };
 export default function App({ Component, pageProps }) {
-  // 2. Use at the root of your app
+ 
+  const [supabaseClient] = useState(() => createBrowserSupabaseClient())
+
   return (
-    // <SaasProvider linkComponent={Link}>
-    <SaasProvider >
+    <SessionContextProvider
+      supabaseClient={supabaseClient}
+      initialSession={pageProps.initialSession}
+    >
+  <SaasProvider >
       <main className={inter.className}>
         <Component {...pageProps} />
       </main>
+
     </SaasProvider>
-  );
-}
+    </SessionContextProvider>
+  )};
