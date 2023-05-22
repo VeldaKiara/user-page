@@ -8,11 +8,35 @@ Authentication is necessary for the following reasons:
 - prevent unauthorized access
 - identity theft and data breaches
 
-Through this article, we will go through how to implement authentication using Supabase and Next JS. This article is also follow up on [how-to-build-a-user-settings-page](https://medium.com/javascript-in-plain-english/how-to-build-a-user-settings-page-in-five-minutes-6d1ba7f233c4)
+In this article we will use [Saas UI](https://saas-ui.dev/docs/introduction)to build the interface and [Supabase](Supabase.com/)for authentication and authorization.
+
+[Saas UI](https://saas-ui.dev/docs/introduction) is a component library built on top of [Chakra UI] (https://chakra-ui.com/docs)a popular (React)(https://react.dev/) library. [Saas UI](https://saas-ui.dev/docs/introduction) includes pre-built components like user management, data grids charts and so mucch more. The components make it easier and faster to develop SaaS applications.
+
+# Why Choose SaaS UI
+
+Some of the benefits of using Saas UI to build your interface include:
+
+1. Time saving
+SaaS UI provides pre-built components that are easily customized and reused across different parts of your application. This speeds up the development process by reducing the amount of code you need to write and enabling you to quickly assemble your UI.
+
+2. Consistency
+SaaS UI offers a well-designed and comprehensive set of UI components that follow modern design principles. The designed components work together seamlessly to create a consistent and professional look and feel throughout your application.
+
+3. Responsive and Mobile-Friendly
+SaaS UI components are built to be responsive and mobile-friendly by default. They are designed to adapt and provide an optimal user experience across different screen sizes and devices. They are highly customizable, so you can easily change the look and feel of the components to match your brand. This helps ensure that your SaaS application is accessible and usable for a wide range of users.
+
+4. Integration with SaaS-specific Features
+SaaS UI is tailored for building SaaS applications, which means it includes components and features specific to the needs of SaaS products like billing information, subscrioption plans and more. This allows you to focus on the core functionality of your application.
+
+5. Security
+Saas UI components are secure since they were built with this in mind.
+
+6. Community and Support
+SaaS UI has a community and support channels where you can seek help, ask questions, and share knowledge with other developers working on SaaS applications. This can be invaluable when you encounter bugs and need help to debug
 
 Supabase is an open-source software that provides a database and a serverless backend service to software applications. It simplifies development by providing tools and services that perform backend tasks such as data storage, real-time updates, authentication, and more. Supabase is scalable, and its ease of use makes it an excellent choice for building web and mobile applications.
 
-## Why Choose Supabase
+#  Why Choose Supabase
 
 Supabase provides the following:
 
