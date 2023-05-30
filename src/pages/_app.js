@@ -5,25 +5,24 @@ import NextLink from "next/link";
 import { SaasProvider } from "@saas-ui/react";
 import { useState, useEffect } from "react";
 import { supabase } from "../utils/supabase";
-import { createBrowserSupabaseClient } from '@supabase/auth-helpers-nextjs'
-import { SessionContextProvider } from '@supabase/auth-helpers-react'
+import { createBrowserSupabaseClient } from "@supabase/auth-helpers-nextjs";
+import { SessionContextProvider } from "@supabase/auth-helpers-react";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function App({ Component, pageProps }) {
- 
-  const [supabaseClient] = useState(() => createBrowserSupabaseClient())
+  const [supabaseClient] = useState(() => createBrowserSupabaseClient());
 
   return (
     <SessionContextProvider
       supabaseClient={supabaseClient}
       initialSession={pageProps.initialSession}
     >
-  <SaasProvider >
-      <main className={inter.className}>
-        <Component {...pageProps} />
-      </main>
-
-    </SaasProvider>
+      <SaasProvider>
+        <main className={inter.className}>
+          <Component {...pageProps} />
+        </main>
+      </SaasProvider>
     </SessionContextProvider>
-  )};
+  );
+}
