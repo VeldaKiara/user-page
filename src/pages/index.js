@@ -1,11 +1,12 @@
 /* react + nextjs imports */
 import { useEffect, useState } from "react";
 import Link from "next/link";
-
 import Head from "next/head";
+import { useRouter } from "next/router.js";
+
 
 /* SaaS UI & Chakra UI Imports */
-import { AppShell } from "@saas-ui/react";
+import { AppShell, useAuth } from "@saas-ui/react";
 import {
   Box,
   Tabs,
@@ -22,16 +23,9 @@ import {
 import { UserSettings } from "../components/UserSettings.jsx";
 import { MySidebar } from "../components/MySidebar.jsx";
 
-/* My hooks */
-import useCurrentUser from "@/hooks/useCurentUser.js";
-import { useRouter } from "next/router.js";
-
-/* supabase*/
-import { supabase } from "@/utils/supabase"; // Replace with the correct path to your supabase instance
-
 export default function Home() {
   const router = useRouter();
-  const currentUser = useCurrentUser();
+  const { isAuthenticated, user } = useAuth();
 
   return (
     <>
@@ -43,7 +37,7 @@ export default function Home() {
       </Head>
 
       <div className="container">
-        {currentUser ? (
+        {user ? (
           <>
             <AppShell sidebar={<MySidebar />}>
               <Box h="100%" w="100%" padding="1em">
