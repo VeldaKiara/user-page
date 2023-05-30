@@ -1,14 +1,32 @@
+/* react + nextjs imports */
+import { useEffect, useState } from "react";
+import Link from "next/link";
 import Head from "next/head";
+import { useRouter } from "next/router.js";
+
 
 /* SaaS UI & Chakra UI Imports */
-import { AppShell } from "@saas-ui/react";
-import { Box, Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
+import { AppShell, useAuth } from "@saas-ui/react";
+import {
+  Box,
+  Tabs,
+  TabList,
+  TabPanels,
+  Tab,
+  TabPanel,
+  Center,
+  Text,
+  textDecoration,
+} from "@chakra-ui/react";
 
 /* My Components */
 import { UserSettings } from "../components/UserSettings.jsx";
 import { MySidebar } from "../components/MySidebar.jsx";
 
 export default function Home() {
+  const router = useRouter();
+  const { isAuthenticated, user } = useAuth();
+
   return (
     <>
       <Head>
@@ -19,40 +37,58 @@ export default function Home() {
       </Head>
 
       <div className="container">
-        <AppShell sidebar={<MySidebar />}>
-          <Box h="100%" w="100%" padding="1em">
-            <Tabs isFitted size="md" variant="enclosed">
-              <TabList>
-                <Tab _selected={{ color: "white", bg: "primary.500" }}>
-                  User
-                </Tab>
-                <Tab _selected={{ color: "white", bg: "primary.500" }}>
-                  Integrations
-                </Tab>
-                <Tab _selected={{ color: "white", bg: "primary.500" }}>
-                  Security
-                </Tab>
-                <Tab _selected={{ color: "white", bg: "primary.500" }}>
-                  Billing
-                </Tab>
-              </TabList>
-              <TabPanels>
-                <TabPanel>
-                  <UserSettings />
-                </TabPanel>
-                <TabPanel>
-                  <p>Integrations Here!</p>
-                </TabPanel>
-                <TabPanel>
-                  <p>Security Here!</p>
-                </TabPanel>
-                <TabPanel>
-                  <p>Billing Here!</p>
-                </TabPanel>
-              </TabPanels>
-            </Tabs>
-          </Box>
-        </AppShell>
+        {user ? (
+          <>
+            <AppShell sidebar={<MySidebar />}>
+              <Box h="100%" w="100%" padding="1em">
+                {/* {currentUser} */}
+                <Tabs isFitted size="md" variant="enclosed">
+                  <TabList>
+                    <Tab _selected={{ color: "white", bg: "primary.500" }}>
+                      User
+                    </Tab>
+                    <Tab _selected={{ color: "white", bg: "primary.500" }}>
+                      Integrations
+                    </Tab>
+                    <Tab _selected={{ color: "white", bg: "primary.500" }}>
+                      Security
+                    </Tab>
+                    <Tab _selected={{ color: "white", bg: "primary.500" }}>
+                      Billing
+                    </Tab>
+                  </TabList>
+                  <TabPanels>
+                    <TabPanel>
+                      <UserSettings />
+                    </TabPanel>
+                    <TabPanel>
+                      <p>Integrations Here!</p>
+                    </TabPanel>
+                    <TabPanel>
+                      <p>Security Here!</p>
+                    </TabPanel>
+                    <TabPanel>
+                      <p>Billing Here!</p>
+                    </TabPanel>
+                  </TabPanels>
+                </Tabs>
+              </Box>
+            </AppShell>
+          </>
+        ) : (
+          <Center h="100%" w="100%">
+            <Link href="/login">
+              <Text
+                fontSize="2xl"
+                fontWeight="bold"
+                color="blue.900"
+                _hover={{ textDecoration: "underline" }}
+              >
+                Please sign in to see this content. 🔒
+              </Text>
+            </Link>
+          </Center>
+        )}
       </div>
     </>
   );

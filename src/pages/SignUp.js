@@ -1,80 +1,44 @@
-import { supabase } from "@/utils/supabase";
-import { Box, Center, Button} from "@chakra-ui/react";
-import { Form, FormLayout, Field, SubmitButton } from "@saas-ui/react";
+// react/next stuff
 import Link from "next/link";
-import {  useEffect } from "react";
-import { useRouter } from 'next/router';
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 
+// chakraUI stuff
+import { Text, Box, Center, Stack } from "@chakra-ui/react";
 
+// saas-ui's auth imports
+import { PasswordForm } from "@saas-ui/react";
 
 export default function SignUp() {
   const router = useRouter();
+  const [errorMessage, setErrorMessage] = useState(null);
 
-  useEffect (() => {
-
-  supabase.auth.onAuthStateChange((event, session) => {
-    
-    if (session){
-        router.push('/')
-    }
-  })
-  
-  },[router]) 
-  const handleSubmit = async ({ email, password }) => {
-    
-    try {
-      const { data, error } = await supabase.auth.signUp({
-        email,
-        password,
-      });
-      console.log(data, error);
-    } catch (error) {
-      console.log(error);
-    }
-  };
   return (
-    <div > 
-    <Box padding="8" position="relative" > 
-      <div style={{ display: "flex", justifyContent: "flex-end" }}>
-        <Button colorScheme="purple" size="md">
-          <Link href="/LogIn">LogIn</Link>
-        </Button>
-      </div>
-
-      <Center>
-        <Form onSubmit={handleSubmit}>
-          <FormLayout>
-            <Field
-              backgroundColor={"white"}
-              textColor={"black"}
-              name="email"
-              label="Email"
-              type="email"
-              rules={{ required: true }}
-              width="20.5em"
+    <>
+      <Box padding="8" position="relative">
+        <Center h="90vh" w="100%">
+          <Stack maxW="400px">
+            <PasswordForm
+              action="signUp"
+              submitLabel="Sign up"
+              onSuccess={() => {
+                router.push("/");
+              }}
+              onError={(error) => setErrorMessage(error.message)}
             />
-            <Field
-              fontFamily={"mono"}
-              backgroundColor={"white"}
-              textColor={"black"}
-              type="password"
-              name="password"
-              label=" Password"
-          
-              width="18em"
-              rules={{ required: true }}
-            />
-
-            <SubmitButton
-              marginBlockStart="10px"
-              disableIfInvalid
-            >
-              Sign Up
-            </SubmitButton>
-          </FormLayout>
-        </Form>
-      </Center>
-    </Box>
-    </div>
+            {errorMessage && <p className="highlight"> {errorMessage}</p>}
+            <Center>
+              <Text fontSize={"md"} color="gray.500">
+                Already have an account?
+                <Link style={{ color: "black" }} href="/login">
+                  {" "}
+                  Log in
+                </Link>
+              </Text>
+            </Center>
+          </Stack>
+        </Center>
+      </Box>
+    </>
   );
 }
